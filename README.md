@@ -16,4 +16,4 @@ This code lets you add this kind of rules:
 
 **PricingRules** class has been refactored to work as an Array of
 Rules. This has been done following the recommendations of Sandi
-Metz's book.
+Metz's book that tells about parts of a bicycle.

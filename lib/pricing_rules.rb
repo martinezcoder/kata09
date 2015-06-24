@@ -27,10 +27,9 @@ class RulesFactory
     OpenStruct.new(
       code: rule_config[:code],
       quantity: rule_config[:quantity],
-      free: rule_config.fetch(:get_free, 0),
+      free: rule_config.fetch(:free, 0),
       discount: rule_config.fetch(:discount, 0)
     )
   end
 end
-
 

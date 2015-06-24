@@ -31,7 +31,7 @@ describe "CheckOut" do
         subject.scan(apple)
         subject.scan(coffee)
       end
-      it "total with be sum of prices" do
+      it "total is the sum of prices" do
         expect(subject.total).to eql(19.34)
       end
     end
@@ -41,9 +41,38 @@ describe "CheckOut" do
         subject.scan(apple)
         subject.scan(apple)
       end
-      it "total with be sum of price for each apple" do
+      it "total is the sum of price for each apple" do
         expect(subject.total).to eql(apple.price*3)
       end
     end
+  end
+
+  context "with get-one-free rule" do
+
+    describe "having a rule that gets us an X free product for each Y products in the cart" do
+      let(:rules) { [{product_code: apple.code, quantity: 3, get_free: 1}] }
+      let(:pricing_rules) { PricingRules.new(rules) }
+
+      subject { Checkout.new(pricing_rules) }
+
+      context "having just the minimum products to get one free" do
+        before :each do
+          subject.scan(apple)
+          subject.scan(apple)
+          subject.scan(apple)
+        end
+
+        it "gets one free apple" do
+          expect(subject.total).to eql(apple.price*2)
+        end
+
+      end
+
+      context "having as many products to get many free ones" do
+
+      end
+
+    end
+
   end
 end

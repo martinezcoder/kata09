@@ -17,6 +17,10 @@ class PricingRules
   def free
     PricingRules.new(select { |rule| rule.free > 0 })
   end
+
+  def discount
+    PricingRules.new(select { |rule| rule.discount > 0 })
+  end
 end
 
 

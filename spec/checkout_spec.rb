@@ -47,34 +47,90 @@ describe "CheckOut" do
     end
   end
 
-  context "with get-one-free rule" do
+  context "with buy-one-get-one-free rule" do
 
     describe "having a rule that gets us an X free product for each Y products in the cart" do
       let(:rules) do
-        [{code: apple.code, quantity: 3, free: 1}]
+        [{code: apple.code, quantity: 5, free: 2}]
       end
       let(:pricing_rules) { RulesFactory.build(rules) }
 
       subject { Checkout.new(pricing_rules) }
 
+      context "having less products than neccessary for apply the rule" do
+        before :each do
+          1.upto 4 do
+            subject.scan(apple)
+          end
+        end
+
+        it "doesnt get any free apple" do
+          expect(subject.total).to eq(apple.price*4)
+        end
+      end
+
       context "having just the minimum products to get one free" do
         before :each do
-          subject.scan(apple)
-          subject.scan(apple)
-          subject.scan(apple)
+          1.upto 5 do
+            subject.scan(apple)
+          end
         end
 
         it "gets one free apple" do
-          expect(subject.total).to eql(apple.price*2)
+          expect(subject.total).to eq(apple.price*4)
         end
 
       end
 
       context "having as many products to get many free ones" do
+        before :each do
+          1.upto 11 do
+            subject.scan(apple)
+          end
+        end
+        it "gets two free apple" do
+          expect(subject.total).to eq(apple.price*9)
+        end
+
+      end
+    end
+  end
+
+  context "with discount rates" do
+    describe "having a discount rule" do
+      let(:rules) do
+        [{code: apple.code, quantity: 3, discount: 10}]
+      end
+      let(:pricing_rules) { RulesFactory.build(rules) }
+
+      subject { Checkout.new(pricing_rules) }
+
+      context "having less products than the necessary for the rule" do
+        before :each do
+          1.upto 2 do
+            subject.scan(apple)
+          end
+        end
+
+        it "doesnt get any free apple" do
+          expect(subject.total).to eql(apple.price*2)
+        end
+      end
+
+      context "having just the minimum products to get a discount" do
+        before :each do
+          1.upto 3 do
+            subject.scan(apple)
+          end
+        end
+
+        it "gets a discount rate for apples" do
+          expect(subject.total).to eq( apple.price*3*(100-pricing_rules.first.discount)/100 )
+        end
 
       end
 
     end
-
   end
+
 end

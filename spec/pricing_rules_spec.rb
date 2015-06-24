@@ -38,6 +38,8 @@ describe "Rules" do
       it { expect(subject).to respond_to(:size) }
       it { expect(subject).to respond_to(:each) }
       it { expect(subject).to respond_to(:for) }
+      it { expect(subject).to respond_to(:free) }
+      it { expect(subject).to respond_to(:discount) }
 
       it "responds to size as an Array" do
         expect(subject.size).to eq(4)
@@ -53,7 +55,7 @@ describe "Rules" do
 
       describe "some magic SQL" do
         describe "get rules for an specific product" do
-          it { expect(subject.for(product.code).size).to eql(2) }
+          it { expect(subject.for(product.code).size).to eq(2) }
           it { expect(subject.for(product.code).rules[0].code).to eql(product.code) }
         end
         describe "get rules that applies buy-one-get-one-free" do
@@ -61,6 +63,12 @@ describe "Rules" do
         end
         describe "get buy-one-get-one-free rules for an specific product" do
           it { expect(subject.free.for(product.code).size).to eq(1) }
+        end
+        describe "get rules that applies for discounts" do
+          it { expect(subject.discount.size).to eq(3) }
+        end
+        describe "get discounts for an specific product" do
+          it { expect(subject.discount.for(product.code).size).to eq(1) }
         end
       end
     end

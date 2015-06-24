@@ -1,7 +1,7 @@
 require "rspec"
 require_relative "../lib/checkout"
 
-describe "CheckOut" do
+describe Checkout do
 
   let(:tea)    { @items[0] }
   let(:apple)  { @items[1] }
@@ -18,7 +18,7 @@ describe "CheckOut" do
   end
 
   context "with empty pricing rules" do
-    subject { Checkout.new() }
+    subject { described_class.new() }
 
     describe "when product list is empty" do
       it "price will be 0" do
@@ -55,7 +55,7 @@ describe "CheckOut" do
       end
       let(:pricing_rules) { RulesFactory.build(rules) }
 
-      subject { Checkout.new(pricing_rules) }
+      subject { described_class.new(pricing_rules) }
 
       context "having less products than neccessary for apply the rule" do
         before :each do
@@ -103,7 +103,7 @@ describe "CheckOut" do
       end
       let(:pricing_rules) { RulesFactory.build(rules) }
 
-      subject { Checkout.new(pricing_rules) }
+      subject { described_class.new(pricing_rules) }
 
       context "having less products than the necessary for the rule" do
         before :each do
@@ -125,7 +125,7 @@ describe "CheckOut" do
         end
 
         it "gets a discount rate for apples" do
-          expect(subject.total).to eq( apple.price*3*(100-pricing_rules.discounts.first.discount)/100 )
+          expect(subject.total).to eq( (apple.price*3*(100-pricing_rules.discounts.first.discount)/100).round(2) )
         end
       end
     end
@@ -139,23 +139,18 @@ describe "CheckOut" do
     end
     let(:pricing_rules) { RulesFactory.build(rules) }
 
-    subject { Checkout.new(pricing_rules) }
+    subject { described_class.new(pricing_rules) }
 
-    context "having just the products to get free ones" do
-        before :each do
-          1.upto 5 do
-            subject.scan(apple)
-          end
+    context "having just the products to get free ones and discounts" do
+      before :each do
+        1.upto 5 do
+          subject.scan(apple)
         end
-
-        it "applies first the free one policy and then the discount rate" do
-          expect(subject.total).to eq( apple.price*3*(100-pricing_rules.discounts.first.discount)/100 )
-        end
-
       end
 
-
-
+      it "applies first the free one policy and then the discount rate" do
+        expect(subject.total).to eq( (apple.price*3*(100-pricing_rules.discounts.first.discount)/100).round(2) )
+      end
+    end
   end
-
 end

@@ -34,9 +34,8 @@ describe "TextMaster proposed tests" do
       subject.scan(coffee)
     end
 
-    it "kkk" do
-      expect(subject.total).to eq(22.25)
-    end
+    it { expect(subject.total).to eq(22.25) }
+    it { expect(subject.total).to eq(19.34) }
   end
 
   describe "second proposed basket" do

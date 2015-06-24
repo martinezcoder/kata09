@@ -14,6 +14,8 @@ class PriceCalculator
     (product_price * chargeable_quantity).round(2)
   end
 
+  private
+
   def apply_free_products_policy
     return quantity unless free_rule_exists?
     deduct = (quantity / free_rule.quantity).floor * free_rule.free
@@ -28,8 +30,6 @@ class PriceCalculator
       price
     end
   end
-
-  private
 
   def free_rule_exists?
     free_rule

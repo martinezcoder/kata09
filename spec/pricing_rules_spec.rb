@@ -39,7 +39,7 @@ describe "Rules" do
       it { expect(subject).to respond_to(:each) }
       it { expect(subject).to respond_to(:for) }
       it { expect(subject).to respond_to(:free) }
-      it { expect(subject).to respond_to(:discount) }
+      it { expect(subject).to respond_to(:discounts) }
 
       it "responds to size as an Array" do
         expect(subject.size).to eq(4)
@@ -65,10 +65,10 @@ describe "Rules" do
           it { expect(subject.free.for(product.code).size).to eq(1) }
         end
         describe "get rules that applies for discounts" do
-          it { expect(subject.discount.size).to eq(3) }
+          it { expect(subject.discounts.size).to eq(3) }
         end
         describe "get discounts for an specific product" do
-          it { expect(subject.discount.for(product.code).size).to eq(1) }
+          it { expect(subject.discounts.for(product.code).size).to eq(1) }
         end
       end
     end

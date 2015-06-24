@@ -69,7 +69,7 @@ describe "CheckOut" do
         end
       end
 
-      context "having just the minimum products to get one free" do
+      context "having just the minimum products to get free ones" do
         before :each do
           1.upto 5 do
             subject.scan(apple)
@@ -77,7 +77,7 @@ describe "CheckOut" do
         end
 
         it "gets one free apple" do
-          expect(subject.total).to eq(apple.price*4)
+          expect(subject.total).to eq(apple.price*3)
         end
 
       end
@@ -89,7 +89,7 @@ describe "CheckOut" do
           end
         end
         it "gets two free apple" do
-          expect(subject.total).to eq(apple.price*9)
+          expect(subject.total).to eq(apple.price*7)
         end
 
       end
@@ -117,7 +117,7 @@ describe "CheckOut" do
         end
       end
 
-      context "having just the minimum products to get a discount" do
+      context "having enough products to get a discount" do
         before :each do
           1.upto 3 do
             subject.scan(apple)
@@ -125,12 +125,37 @@ describe "CheckOut" do
         end
 
         it "gets a discount rate for apples" do
-          expect(subject.total).to eq( apple.price*3*(100-pricing_rules.first.discount)/100 )
+          expect(subject.total).to eq( apple.price*3*(100-pricing_rules.discounts.first.discount)/100 )
+        end
+      end
+    end
+  end
+
+  context "having both discount rates and bye-one-get-one-free" do
+    let(:rules) do
+      [{code: apple.code, quantity: 5, free: 2},
+       {code: apple.code, quantity: 3, discount: 2},
+      ]
+    end
+    let(:pricing_rules) { RulesFactory.build(rules) }
+
+    subject { Checkout.new(pricing_rules) }
+
+    context "having just the products to get free ones" do
+        before :each do
+          1.upto 5 do
+            subject.scan(apple)
+          end
+        end
+
+        it "applies first the free one policy and then the discount rate" do
+          expect(subject.total).to eq( apple.price*3*(100-pricing_rules.discounts.first.discount)/100 )
         end
 
       end
 
-    end
+
+
   end
 
 end

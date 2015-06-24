@@ -1,16 +1,10 @@
 
 To execute the tests run:
 ```
+bundle install
 bundle exec rake
 ```
-
-
-This code lets you add this kind of rules:
-
-* If you buy more than X products A, you will get Y% discount.
-* For each X products A that you bought, you will get Y free products B.
-  A and B could or not be the same product.
-
+* About discounts: The discounts are applied using percentages
 
 **PricingRules** class has been refactored to work as an Array of Rules. A rule factory class has been done following the recommendations of Sandi Metz's book that tells about parts of a bicycle. This will make it possible to introduce features like CSV loader for rules.
 

@@ -4,19 +4,25 @@ class PricingRules
   def_delegators :@rules, :size, :each
   include Enumerable
 
+  attr_reader :rules
+
   def initialize(rules)
     @rules = rules
   end
 
   def for(product_code)
-    select { |rule| rule.code == product_code}
+    PricingRules.new(select { |rule| rule.code == product_code })
+  end
+
+  def free
+    PricingRules.new(select { |rule| rule.free > 0 })
   end
 end
 
 
 require 'ostruct'
 class RulesFactory
-  def self.build(config, rules_class = PricingRules)
+  def self.build(config = [], rules_class = PricingRules)
     rules_class.new(
       config.collect { |rule_config|
         create_rule(rule_config)

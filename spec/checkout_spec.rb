@@ -18,7 +18,7 @@ describe "CheckOut" do
   end
 
   context "with empty pricing rules" do
-    subject { Checkout.new(nil) }
+    subject { Checkout.new() }
 
     describe "when product list is empty" do
       it "price will be 0" do
@@ -50,8 +50,10 @@ describe "CheckOut" do
   context "with get-one-free rule" do
 
     describe "having a rule that gets us an X free product for each Y products in the cart" do
-      let(:rules) { [{product_code: apple.code, quantity: 3, get_free: 1}] }
-      let(:pricing_rules) { PricingRules.new(rules) }
+      let(:rules) do
+        [{code: apple.code, quantity: 3, free: 1}]
+      end
+      let(:pricing_rules) { RulesFactory.build(rules) }
 
       subject { Checkout.new(pricing_rules) }
 

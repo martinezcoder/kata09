@@ -1,4 +1,5 @@
 require_relative 'pricing_rules'
+require_relative 'price_calculator'
 
 Item = Struct.new(:code, :name, :price)
 
@@ -6,7 +7,7 @@ class Checkout
 
   attr_reader :cart, :rules
 
-  def initialize(pricing_rules)
+  def initialize(pricing_rules = RulesFactory.build())
     @rules = pricing_rules
     @cart = Hash.new
   end
@@ -33,8 +34,8 @@ class Checkout
   end
 
   def price_for(item, quantity)
-    rules.price_for(item.code, quantity)
+    product_rules = rules.for(item.code)
+    PriceCalculator.new(product_rules, item.price, quantity).calculate
   end
 end
 
-require 'pry'; binding.pry

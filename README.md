@@ -17,3 +17,6 @@ This code lets you add this kind of rules:
 **PricingRules** class has been refactored to work as an Array of
 Rules. This has been done following the recommendations of Sandi
 Metz's book that tells about parts of a bicycle.
+
+**PriceCalculator** takes care about pricing calculation, applying the
+rules. It priorizates buy-one-get-one-free against discounts. That means that it will apply discounts after counting how many should be charged from the cart

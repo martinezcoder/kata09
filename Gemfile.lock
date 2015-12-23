@@ -1,33 +1,29 @@
 GEM
   specs:
-    byebug (1.1.1)
-      columnize (~> 0.3.6)
-      debugger-linecache (~> 1.2.0)
+    byebug (8.2.1)
     coderay (1.1.0)
-    columnize (0.3.6)
-    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     method_source (0.8.2)
-    pry (0.10.1)
+    pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-byebug (1.0.1)
-      byebug (~> 1.1.1)
-      pry (>= 0.9.10)
-    rspec (3.3.0)
-      rspec-core (~> 3.3.0)
-      rspec-expectations (~> 3.3.0)
-      rspec-mocks (~> 3.3.0)
-    rspec-core (3.3.1)
-      rspec-support (~> 3.3.0)
-    rspec-expectations (3.3.0)
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.1)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.3.0)
-    rspec-mocks (3.3.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.3.0)
-    rspec-support (3.3.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     slop (3.6.0)
 
 PLATFORMS
@@ -39,4 +35,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   1.10.4
+   1.10.6

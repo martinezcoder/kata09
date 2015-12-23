@@ -34,7 +34,6 @@ describe "TextMaster proposed tests" do
       subject.scan(coffee)
     end
 
-    it { expect(subject.total).to eq(22.25) }
     it { expect(subject.total).to eq(19.34) }
   end
 
